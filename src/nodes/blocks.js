@@ -1,4 +1,4 @@
-const { concat, group, ifBreak, indent, softline } = require("prettier").doc.builders;
+const { breakParent, concat, group, ifBreak, indent, softline } = require("prettier").doc.builders;
 
 const isCall = node => ["::", "."].includes(node) || node.type === "@period";
 
@@ -65,6 +65,7 @@ const printBlock = (path, opts, print) => {
   const [variables, statements] = path.getValue().body;
 
   const doBlock = concat([
+    breakParent,
     " do",
     variables ? concat([" ", path.call(print, "body", 0)]) : "",
     indent(concat([softline, path.call(print, "body", 1)])),
